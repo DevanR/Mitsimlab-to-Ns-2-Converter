@@ -1,0 +1,36 @@
+# Project: Converter
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = RN_Arc.o Converter.o WcsPoint.o $(RES)
+LINKOBJ  = RN_Arc.o Converter.o WcsPoint.o $(RES)
+LIBS =  -L"D:/Dev-Cpp/lib"  
+INCS =  -I"D:/Dev-Cpp/include" 
+CXXINCS =  -I"D:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Dev-Cpp/include/c++/3.4.2"  -I"D:/Dev-Cpp/include" 
+BIN  = Converter.exe
+CXXFLAGS = $(CXXINCS)   -Wno-deprecated
+CFLAGS = $(INCS)   -Wno-deprecated
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before Converter.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "Converter.exe" $(LIBS)
+
+RN_Arc.o: RN_Arc.cpp
+	$(CPP) -c RN_Arc.cpp -o RN_Arc.o $(CXXFLAGS)
+
+Converter.o: Converter.cpp
+	$(CPP) -c Converter.cpp -o Converter.o $(CXXFLAGS)
+
+WcsPoint.o: WcsPoint.cpp
+	$(CPP) -c WcsPoint.cpp -o WcsPoint.o $(CXXFLAGS)
