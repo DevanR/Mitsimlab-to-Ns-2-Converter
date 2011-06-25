@@ -1,0 +1,110 @@
+Converter Program Explanation
+
+Library and Class files
+
+bool.h: defines boolean
+math.h: defines mathematical constants
+constant.h: defines the constants used by the MITSIMLab program with respect to the various simulation models
+
+WcsPoint.h and WcsPoint.cpp
+Defines the class WcsPoint which is used by MITSIMLab to store and manipulate Cartesian coordinates.
+
+RN_Arc.h and RN_Arc.cpp
+Defines the class RN_Arc which is used by MITSIMLab to define a arc, which
+consists of two WcsPoints and a 'bulge', which refers to the curvature of the
+arc. It also includes methods for calculating the length and WcsPoints along
+the length of the arc.
+
+Main file
+
+Converter.cpp
+It contains three structures, 'Vehicle', 'Trajectory' and 'Segment. 'Vehicle'
+is used to represent individual vehicles in the simulation and contains
+attributes such as a 'Trajectory' array, start_time, end_time and status.
+'Trajectory' is used to document the path of a vehicle for each simulation
+step. It contains the attributes Segment, lane, position, speed, acceleration
+and WcsPoint. 'Segment' is similar to 'RN_Arc', it consist of the Cartesian
+start and end points (represented as WcsPoint) as well as bulge to represent
+the curvature of the arc.
+
+Summary of how it works 
+The program searches through the network database file
+for the word “[Links]”, upon which it can read in the first two numbers which
+represent the number of links and segments in the network file.
+
+[Links] : 98 : 99 : 313
+
+It then reads in the Segment ID as well as its attributes, storing it in its
+own Segment array. The first number is the Segment start x-coordinate followed
+by the start y-coordinate, followed by the bulge and the end x and y
+coordinates.
+
+{892.64107 809.511108 0.00186556221 541.461 197.574}
+
+Once all the segments in the network database file is read and stored, the
+program proceeds to read in the trajectory file data. This data represents the
+Time, Vehicle ID, Segment, Lane, Position, Speed, Acceleration and Vehicle
+Type.
+
+5 1 83 261 31 26.5764 -2.69930e05 2
+
+This data is then input into each Vehicle object's trajectory. The Vehicle ID
+is used to identify a particular vehicle and the Time is used to identify that
+particular vehicle's trajectory at that specific time. Once this is done, the
+Cartesian position of a vehicle at a particular instant in time can then be
+calculated with the Segment attributes (which we already know) and the Position
+value read from the Trajectory file. This is done by using the computeArc()
+method in the RN_Arc class.
+
+During the calculation of the various Cartesian coordinates, the Converter
+program takes note of the minimum x and y coordinates. This is used to 'shift'
+or correct the Cartesian coordinates as NS-2 does not allow negative Cartesian
+coordinates to be used.
+
+The next step is to write and create the NS mobility file with data already
+known. What we end up with is an array of vehicles with a trajectory array
+spanning the time duration of the simulation. By going through all the
+trajectory arrays in order and checking if the current time that we require to
+be read falls in between the start time and end time of each vehicle we are
+able to write the valid moving vehicle's Cartesian position.
+
+Additional output files for testing the reading of the Network database file
+and Trajectory file are also created as well as a list of all the x/y
+coordinates of all the vehicles to plot the movement topology of the vehicles.
+
+Instructions on how to use the Converter Program
+
+The Converter program requires two input files to create the mobility trace
+file. These are the network database file used by MITSIMLab and the simulation
+out file known as Trajectory.out. Before the Converter program binary is
+executed, place both these files in the same folder and rename them test.dat
+and trajectory.out respectively. (these can be changed from the source code,
+but re-compilation is required).  After the Converter code is executed, there
+will be three output files. These are scene.txt, coord.txt and map.txt.
+
+scene.txt 
+
+This is basically the NS-2 scene file required for NS-2 simulation.  It
+contains the corrected (positive) vehicle mobility traces, which can be fed
+into NS-2.  
+
+coord.txt 
+
+This file contains a list of all the X/Y Cartesian coordinates, of all the
+vehicle trajectories of the entire simulation. The purpose of this list is to
+enable plotting of these points for graphical analysis.  
+
+map.txt 
+
+This file contains the data read from the network database file (test.dat).
+Segment data read in can be double checked with the data found in the network
+database file for accuracy.  
+
+cout<< "Segment ID = "<< i<< endl;
+cout<< "Start x = "<< Segment_array[i].startpnt.x()<<endl;
+cout<< "Start y = "<< Segment_array[i].startpnt.y()<<endl;
+cout<< "End x = "<< Segment_array[i].endpnt.x()<<endl;
+cout<< "End y = "<< Segment_array[i].endpnt.y()<<endl;
+cout<< "Bulge = "<< Segment_array[i].bulge<<endl;
+cout<< endl;
+
