@@ -1,3 +1,32 @@
+
+Mitsimlab-to-Ns-2-Converter
+============================
+
+This is the source code from the following paper authored by myself and Seet Boon Chong:
+
+Federating of MITSIMLab and ns-2 for realistic vehicular network simulation(Link)
+Proc. Mobility2007 - 4th international conference on mobile technology, applications, and systems and the 1st international symposium on Computer human interaction in mobile technology
+
+Abstract
+In the near future, more vehicles are expected to be equipped with on-board
+devices that would permit wireless networking between vehicles in the road and
+between vehicles and infrastructure, e.g. base stations, for the purpose of
+safety, entertainment, and other mobile applications, such as mobile gaming and
+Internet access. For any accurate performance study of vehicular networks
+using computer simulation, it is important to consider real-life vehicular
+phenomena such as constrained movement due to road paths and traffic control at
+signalised street junctions. However, currently few simulators can offer a high
+degree of realism in modelling both vehicular movements and wireless
+communication for an accurate performance study of wireless vehicular networks.
+In this paper, we illustrate for the first time, the feasibility of using an
+open-source microscopic vehicle simulator MITSIMLab to generate high fidelity
+vehicle movement traces for a wide range of transport settings, processing the
+generated traces, and exporting them as mobility profiles of vehicular nodes
+under study to the popular ns-2 network simulator.
+
+
+----
+
 Converter Program Explanation
 
 Library and Class files
